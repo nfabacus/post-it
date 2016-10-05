@@ -2,7 +2,35 @@ var app = angular.module('postit', ['ui.router']);
 
 app.factory('posts', [function() {
   var o = {
-    posts: []
+    posts: [
+      {
+        title: "Hello World Title",
+        link: "www.helloworld.com",
+        upvotes: 5,
+        comments: [
+          {author: 'Noby', body: 'Cool post!', upvotes: 0},
+          {author: 'Giancarlo', body: 'Great idea but everything is wrong!', upvotes: 0}
+        ]
+      },
+      {
+        title: "My note",
+        link: "www.mynote.com",
+        upvotes: 5,
+        comments: [
+          {author: 'Tony', body: 'What do you think?', upvotes: 0},
+          {author: 'Jim', body: 'It is fine!', upvotes: 0}
+        ]
+      },
+      {
+        title: "My item",
+        link: "www.item.com",
+        upvotes: 5,
+        comments: [
+          {author: 'Noby', body: 'Hahaha!', upvotes: 0},
+          {author: 'Giancarlo', body: 'Great idea! ', upvotes: 0}
+        ]
+      }
+    ]
   };
   return o;
 }]);
@@ -74,7 +102,7 @@ app.controller('MainCtrl', [
         .state('comments', {
           url: '/comments',
           templateUrl: '/comments.html',
-          controller: 'PostsCtrl'
+          controller: 'MainCtrl'
         });
       $urlRouterProvider.otherwise('home');
     }

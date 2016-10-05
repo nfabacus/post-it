@@ -60,6 +60,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
+      <a href="#/comments">See all comments</a>
     </script>
 
     <script type="text/ng-template" id="/posts.html">
@@ -96,7 +97,31 @@
       </form>
     </script>
     <script type="text/ng-template" id="/comments.html">
-      comments
+      <h1>All the comments</h1>
+
+      <div ng-repeat="post in posts">
+          <p ng-repeat="comment in post.comments | orderBy:'toString()'">
+            {{comment.body}}
+          </p>
+        </div>
+
+        <!-- <span style="font-size:20px; margin-left:10px;">
+          <a ng-show="post.link" href="{{post.link}}">
+            {{post.title}}
+          </a>
+          <span ng-hide="post.link">
+            {{post.title}}
+          </span>
+        </span>
+        <span>
+          <a href="#/posts/{{$index}}">Comments</a>
+        </span> -->
+      </div>
+
+      <!-- <div ng-repeat="comment in posts.comments | orderBy: '-title'" >
+        {{comment.body}}
+      </div> -->
+      </div>
     </script>
   </body>
 </html>
