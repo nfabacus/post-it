@@ -70,6 +70,11 @@ app.controller('MainCtrl', [
           url: '/posts/{id}',
           templateUrl: '/posts.html',
           controller: 'PostsCtrl'
+        })
+        .state('comments', {
+          url: '/comments',
+          templateUrl: '/comments.html',
+          controller: 'PostsCtrl'
         });
       $urlRouterProvider.otherwise('home');
     }
