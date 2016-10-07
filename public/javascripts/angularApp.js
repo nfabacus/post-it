@@ -1,6 +1,6 @@
 var app = angular.module('postit', ['ui.router']);
 
-app.factory('posts', [function() {
+app.factory('posts', ['$http', function($http) {
   var o = {
     posts: [
       {
@@ -33,6 +33,15 @@ app.factory('posts', [function() {
     ]
   };
   return o;
+}]);
+
+app.service('postservice', ['$http', 'posts', function($http, posts) {
+
+  o.getAll = function() {
+    return $http.get('/posts').success(function(data){
+      angular.copy(data, o.posts);
+    });
+  }
 }]);
 
 
@@ -93,6 +102,11 @@ app.controller('MainCtrl', [
           url: '/home',
           templateUrl: '/home.html',
           controller: 'MainCtrl'
+          resolve: {
+            postPromise: ['posts', function(posts){
+              return posts.getAll();
+            }]
+          }
         })
         .state('posts', {
           url: '/posts/{id}',
