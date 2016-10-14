@@ -6,19 +6,29 @@ app.factory('posts', ['$http', function($http) {
   };
 
   o.get = function(id) {
-    return $http.get('/posts/' + id).then(function(res){
+    return $http({
+      method: 'GET',
+      url: '/posts/' + id
+    }).then(function(res){
       return res.data;
     });
   };
 
   o.getAll = function() {
-    return $http.get('/posts').success(function(data){
+    return $http({
+      method: 'GET',
+      url: '/posts'
+    }).success(function(data){
       angular.copy(data, o.posts);
     });
   };
 
   o.create = function(post) {
-    return $http.post('/posts', post).success(function(data) {
+    return $http({
+      method: 'POST',
+      url: '/posts',
+      data: {post: 'post'}
+    }).success(function(data) {
       o.posts.push(data);
     });
   };
@@ -34,7 +44,11 @@ app.factory('posts', ['$http', function($http) {
   };
 
   o.addComment = function(id, comment) {
-    return $http.post('/posts/' + id + '/comments', comment);
+    return $http({
+      method:'POST',
+      url: '/posts/' + id + '/comments',
+      data: {comment: 'comment'}
+    });
   };
 
   o.upvoteComment = function(post, comment) {
