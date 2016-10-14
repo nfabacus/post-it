@@ -41,7 +41,17 @@ router.param('post', function(req, res, next, id) {
   });
 });
 
+router.param('comment', function(req, res, next, id) {
+  var query = Comment.findById(id);
 
+  query.exec(function (err, comment){
+    if (err) { return next(err); }
+    if (!comment) { return next(new Error("can't find comment")); }
+
+    req.comment = comment;
+    return next();
+  });
+});
 
 router.get('/posts/:post', function(req, res, next) {
   req.post.populate('comments', function(err, post) {
