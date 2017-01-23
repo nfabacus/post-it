@@ -5,12 +5,13 @@ var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 var mongoose = require('mongoose');
 var passport = require('passport');
-var user = mongoose.model('User');
 
 // var Post = mongoose.model('Post');
 // var Comment = mongoose.model('Comment');
+// var user = mongoose.model('User');
 var Post = require('../models/Posts');
 var Comment = require('../models/Comments');
+var Comment = require('../models/Users');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
