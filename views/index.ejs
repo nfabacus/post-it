@@ -15,6 +15,7 @@
 
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
       <ul class="nav navbar-nav">
+        <li ng-show="isLoggedIn()"><a href="/#/chat">Chat</a></li>
         <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
@@ -30,7 +31,7 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://localhost:3000');
+        //var socket = io.connect('http://localhost:3000');
         // socket.on('connect', function () {
         // socket
         // .emit('authenticate', {token: jwt}) //send the jwt
@@ -45,6 +46,18 @@
         // });
     </script>
 
+    <script type="text/ng-template" id="/chat.html">
+      <div class="page-header">
+        <h1>Chat with the teacher</h1>
+      </div>
+
+      <ul id="messages">
+        <li ng-repeat="message in chat">{{message}}</li>
+      </ul>
+      <form action="">
+        <input ng-model="message" autocomplete="off" /><button ng-click="send()">Send</button>
+      </form>
+    </script>
 
     <script type="text/ng-template" id="/register.html">
       <div class="page-header">

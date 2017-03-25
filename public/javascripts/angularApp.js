@@ -26,6 +26,11 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }
     })
+    .state('chat', {
+      url: '/chat',
+      templateUrl: '/chat.html',
+      controller: 'ChatCtrl'
+    })
     .state('login', {
       url: '/login',
       templateUrl: '/login.html',
@@ -49,6 +54,7 @@ function($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('home');
 }])
+
 .factory('posts', ['$http', 'auth', function($http, auth){
   var o = {
     posts: []
@@ -132,7 +138,7 @@ function($stateProvider, $urlRouterProvider) {
     logIn: function(user){
       return $http.post('/login', user).success(function(data){
         auth.saveToken(data.token);
-        
+
       });
     },
     logOut: function(){
@@ -190,6 +196,34 @@ function($scope, posts, post, auth){
   $scope.incrementUpvotes = function(comment){
     posts.upvoteComment(post, comment);
   };
+}])
+//chat controller - sparsh
+.controller('ChatCtrl', [
+'$scope','auth',
+function($scope,auth){
+
+  $scope.chat = [];
+
+  var socket = io();
+
+  socket.on('connect', function () {
+    socket
+      .emit('authenticate', {token: auth.getToken()})
+      .on('authenticated', function () {
+        //do other things
+      })
+      .on('unauthorized', function(msg) {
+        console.log("unauthorized: " + JSON.stringify(msg.data));
+        throw new Error(msg.data.type);
+      })
+  });
+
+  //note messages will only be sent if socket is authenticated
+  $scope.send = function(){
+    socket.emit('message',$scope.message)
+    $scope.chat.push('me: ' +$scope.message);
+    $scope.message = ''
+  }
 }])
 .controller('AuthCtrl', [
 '$scope',
