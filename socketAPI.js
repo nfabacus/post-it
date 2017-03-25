@@ -18,10 +18,13 @@ module.exports = function(io) {
       // }
       console.log('connection: %s socket(s) connected',connections.length);
 
+      // socket.emit.... I do not need to authenticate every time I emit.
+
       // get chat message
       socket.on('message',(data)=>{
         console.log(`MEssage from user : ${data}`)
       })
+      
       // disconnect
       socket.on('disconnect', function(data){
         connections.splice(connections.indexOf(socket),1);
@@ -39,7 +42,8 @@ module.exports = function(io) {
         timeout: 15000
       })).on('authenticated', function(socket) {
         //this socket is authenticated, we are good to handle more events from it.
-        console.log(socket.decoded_token)
+        console.log('this is the decoded token: ', socket.decoded_token)
         console.log('hello! ' + socket.decoded_token.username);
+
       });
 };

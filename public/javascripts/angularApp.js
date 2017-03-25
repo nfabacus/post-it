@@ -143,6 +143,7 @@ function($stateProvider, $urlRouterProvider) {
     },
     logOut: function(){
       $window.localStorage.removeItem('post-it-token');
+      // socket.disconnect();
     }
   };
 
