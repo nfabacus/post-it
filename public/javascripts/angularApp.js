@@ -101,14 +101,13 @@ function($stateProvider, $urlRouterProvider) {
 .factory('auth', ['$http', '$window', '$rootScope', function($http, $window, $rootScope){
    var auth = {
     saveToken: function (token){
-      $window.localStorage['flapper-news-token'] = token;
+      $window.localStorage['post-it-token'] = token;
     },
     getToken: function (){
-      return $window.localStorage['flapper-news-token'];
+      return $window.localStorage['post-it-token'];
     },
     isLoggedIn: function(){
       var token = auth.getToken();
-
       if(token){
         var payload = JSON.parse($window.atob(token.split('.')[1]));
 
@@ -133,10 +132,11 @@ function($stateProvider, $urlRouterProvider) {
     logIn: function(user){
       return $http.post('/login', user).success(function(data){
         auth.saveToken(data.token);
+        
       });
     },
     logOut: function(){
-      $window.localStorage.removeItem('flapper-news-token');
+      $window.localStorage.removeItem('post-it-token');
     }
   };
 
